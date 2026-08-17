@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
+import { Agentation } from "agentation";
 
 const services = [
   {
@@ -169,58 +170,54 @@ function Site() {
     <div ref={rootRef}>
       <header className={`site-header${scrolled ? " is-scrolled" : ""}`}>
         <div className="container site-header__inner">
-          <a className="brand" href="#top">
-            <span className="brand__mark" aria-hidden="true" />
-            БарСайтов
-          </a>
           <nav className="nav" aria-label="Основная навигация">
             <a href="#services">Услуги</a>
             <a href="#process">Процесс</a>
             <a href="#cases">Кейсы</a>
             <a href="#contact">Контакты</a>
           </nav>
-          <a className="btn btn--primary" href="#contact">
-            Обсудить проект
-          </a>
         </div>
       </header>
 
       <main id="top">
         <section className="hero">
-          <div className="container hero__grid">
-            <div className="hero__copy">
-              <p className="hero__brand">
-                Бар<span>Сайтов</span>
-              </p>
-              <h1 className="hero__title">Сайты на заказ</h1>
-              <p className="hero__lead">
-                Создаем лендинги, корпоративные сайты и магазины под ключ: от
-                идеи до запуска.
-              </p>
-              <div className="hero__actions">
-                <a className="btn btn--primary btn--shine" href="#contact">
-                  Обсудить проект
-                </a>
-                <a className="btn btn--ghost" href="#cases">
-                  Смотреть кейсы
-                </a>
-              </div>
-            </div>
-
-            <div className="hero__visual" aria-hidden="true">
-              <div className="hero__stage">
-                <div className="hero__mock">
-                  <div className="hero__mock-bar">
-                    <span className="hero__mock-dot" />
-                    <span className="hero__mock-dot" />
-                    <span className="hero__mock-dot" />
-                  </div>
-                  <div className="hero__mock-body">
-                    <div className="hero__mock-panel" />
-                    <div className="hero__mock-panel hero__mock-panel--accent" />
-                  </div>
+          <div className="container">
+            <h1 className="hero__brand">
+              <span className="hero__brand-bar">Бар</span>
+              <span className="hero__brand-site">Сайтов</span>
+            </h1>
+            <div className="hero__grid">
+              <div className="hero__copy">
+                <p className="hero__title">Сайты на заказ</p>
+                <p className="hero__lead">
+                  Создаем лендинги, корпоративные сайты и магазины под ключ: от
+                  идеи до запуска.
+                </p>
+                <div className="hero__actions">
+                  <a className="btn btn--primary btn--shine" href="#contact">
+                    Обсудить проект
+                  </a>
+                  <a className="btn btn--ghost" href="#cases">
+                    Смотреть кейсы
+                  </a>
                 </div>
-                <div className="hero__float" />
+              </div>
+
+              <div className="hero__visual" aria-hidden="true">
+                <div className="hero__stage">
+                  <div className="hero__mock">
+                    <div className="hero__mock-bar">
+                      <span className="hero__mock-dot" />
+                      <span className="hero__mock-dot" />
+                      <span className="hero__mock-dot" />
+                    </div>
+                    <div className="hero__mock-body">
+                      <div className="hero__mock-panel" />
+                      <div className="hero__mock-panel hero__mock-panel--accent" />
+                    </div>
+                  </div>
+                  <div className="hero__float" />
+                </div>
               </div>
             </div>
           </div>
@@ -258,7 +255,10 @@ function Site() {
           <div className="container">
             <div className="section__head reveal">
               <p className="section__eyebrow">Как работаем</p>
-              <h2 className="section__title">Дорожная карта создания сайта</h2>
+              <h2 className="section__title">
+                Дорожная карта{" "}
+                <span className="section__title-accent">создания сайта</span>
+              </h2>
               <p className="section__text">
                 На каждом этапе понятно, что происходит и что нужно от вас.
               </p>
@@ -420,5 +420,12 @@ function Site() {
 }
 
 export default function App() {
-  return <Site />;
+  return (
+    <>
+      <Site />
+      {import.meta.env.DEV && (
+        <Agentation endpoint="http://localhost:4747" />
+      )}
+    </>
+  );
 }
