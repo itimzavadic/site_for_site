@@ -1,36 +1,36 @@
 import { useEffect, useRef, useState } from "react";
-import type { FormEvent } from "react";
 import { Agentation } from "agentation";
+
+const TG_USER = "legat_io";
+const TG_MESSAGE = "Привет! Давай обсудим мой проект!";
+const PHONE = "+375444910602";
+const PHONE_LABEL = "+375(44)491-06-02";
+const EMAIL = "tzavadic@gmail.com";
 
 const services = [
   {
     title: "Лендинг под заявки",
     price: "от 350 BYN",
-    type: "landing",
     text: "Одна страница с сильным оффером, информационные блоки, форма обратной связи, навигация, требования законодательства. Срок: 1-7 дней.",
   },
   {
     title: "Корпоративный сайт",
     price: "от 900 BYN",
-    type: "corp",
     text: "Многостраничный сайт, услуги, легкие интеграции, админ-панель (опционально). Срок: 7-14 дней.",
   },
   {
     title: "Интернет-магазин",
     price: "от 1500 BYN",
-    type: "shop",
     text: "Каталог, админ-панель, корзина, оплата (опционально), аналитика и т. д. Срок: до 30 дней.",
   },
   {
     title: "Редизайн / доработка",
     price: "от 250 BYN",
-    type: "other",
     text: "Обновление визуала, оптимизация скорости и дизайна текущего сайта без полной перестройки.",
   },
   {
     title: "Сопровождение",
     price: "от 120 BYN",
-    type: "other",
     text: "Правки, новые блоки, мелкий функционал и техническая поддержка.",
   },
 ];
@@ -148,11 +148,40 @@ function useReveal() {
   return ref;
 }
 
+function useTypedMessage(text: string, active: boolean) {
+  const [value, setValue] = useState("");
+
+  useEffect(() => {
+    if (!active) return;
+    setValue("");
+    let index = 0;
+    const timer = window.setInterval(() => {
+      index += 1;
+      setValue(text.slice(0, index));
+      if (index >= text.length) window.clearInterval(timer);
+    }, 36);
+    return () => window.clearInterval(timer);
+  }, [active, text]);
+
+  return value;
+}
+
+function telegramHref(text: string) {
+  return `https://t.me/${TG_USER}?text=${encodeURIComponent(text)}`;
+}
+
 function Site() {
   const rootRef = useReveal();
+  const contactRef = useRef<HTMLElement | null>(null);
   const [scrolled, setScrolled] = useState(false);
-  const [sent, setSent] = useState(false);
-  const [taskType, setTaskType] = useState("landing");
+  const [chatVisible, setChatVisible] = useState(false);
+  const typedMessage = useTypedMessage(TG_MESSAGE, chatVisible);
+  const [draft, setDraft] = useState("");
+  const typingDone = typedMessage.length >= TG_MESSAGE.length;
+
+  useEffect(() => {
+    setDraft(typedMessage);
+  }, [typedMessage]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -161,10 +190,18 @@ function Site() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setSent(true);
-  }
+  useEffect(() => {
+    const node = contactRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setChatVisible(true);
+      },
+      { threshold: 0.35 }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div ref={rootRef}>
@@ -223,23 +260,17 @@ function Site() {
           </div>
         </section>
 
-        <section className="section section--tight" id="services">
+        <section className="section section--tight">
           <div className="container">
-            <div className="section__head reveal">
+            <div className="section__head reveal" id="services">
               <h2 className="section__title">Услуги</h2>
-              <p className="section__text">
-                Короткий набор направлений — без прайса на 20 строк. Цены
-                ориентировочные, финал после брифа.
+                <p className="section__text">
+                Цены ориентировочные. Финальная стоимость после брифа.
               </p>
             </div>
             <div className="services">
               {services.map((item) => (
-                <a
-                  className="service reveal"
-                  key={item.title}
-                  href="#contact"
-                  onClick={() => setTaskType(item.type)}
-                >
+                <a className="service reveal" key={item.title} href="#contact">
                   <div className="service__top">
                     <h3>{item.title}</h3>
                     <span className="service__price">{item.price}</span>
@@ -251,10 +282,9 @@ function Site() {
           </div>
         </section>
 
-        <section className="section" id="process">
+        <section className="section">
           <div className="container">
-            <div className="section__head reveal">
-              <p className="section__eyebrow">Как работаем</p>
+            <div className="section__head reveal" id="process">
               <h2 className="section__title">
                 Дорожная карта{" "}
                 <span className="section__title-accent">создания сайта</span>
@@ -274,10 +304,13 @@ function Site() {
           </div>
         </section>
 
-        <section className="section" id="cases">
+        <section className="section">
           <div className="container">
-            <div className="section__head reveal">
-              <h2 className="section__title">Работаю с задачами бизнеса</h2>
+            <div className="section__head reveal" id="cases">
+              <h2 className="section__title">
+                Работаю с{" "}
+                <span className="section__title-accent">задачами бизнеса</span>
+              </h2>
               <p className="section__text">
                 Эффективный сайт для вашего бизнеса.
               </p>
@@ -311,11 +344,12 @@ function Site() {
           </div>
         </section>
 
-        <section className="section" id="faq">
+        <section className="section">
           <div className="container">
-            <div className="section__head reveal">
-              <p className="section__eyebrow">FAQ</p>
-              <h2 className="section__title">Частые вопросы</h2>
+            <div className="section__head reveal" id="faq">
+              <h2 className="section__title">
+                Частые <span className="section__title-accent">вопросы</span>
+              </h2>
               <p className="section__text">
                 Коротко про сроки, правки, оплату и то, что нужно от вас.
               </p>
@@ -331,80 +365,61 @@ function Site() {
           </div>
         </section>
 
-        <section className="section" id="contact">
+        <section className="section" ref={contactRef}>
           <div className="container contact">
-            <div>
-              <div className="section__head reveal">
-                <p className="section__eyebrow">Контакт</p>
-                <h2 className="section__title">Обсудим ваш проект</h2>
-                <p className="section__text">
-                  Оставьте заявку — ответим в течение рабочего дня.
-                </p>
-              </div>
-              <form className="contact__form reveal" onSubmit={onSubmit}>
-                <div className="field">
-                  <label htmlFor="name">Имя</label>
-                  <input id="name" name="name" required placeholder="Как к вам обращаться" />
-                </div>
-                <div className="field">
-                  <label htmlFor="contact">Telegram / телефон</label>
-                  <input
-                    id="contact"
-                    name="contact"
-                    required
-                    placeholder="@legat_io или +375..."
-                  />
-                </div>
-                <div className="field">
-                  <label htmlFor="type">Тип задачи</label>
-                  <select
-                    id="type"
-                    name="type"
-                    value={taskType}
-                    onChange={(event) => setTaskType(event.target.value)}
-                  >
-                    <option value="landing">Лендинг</option>
-                    <option value="corp">Корпоративный сайт</option>
-                    <option value="shop">Магазин</option>
-                    <option value="other">Другое</option>
-                  </select>
-                </div>
-                <div className="field">
-                  <label htmlFor="message">Коротко о задаче</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={4}
-                    placeholder="Ниша, срок, есть ли текущий сайт"
-                  />
-                </div>
-                <button className="btn btn--primary" type="submit">
-                  Оставить заявку
-                </button>
-                <p className={`form-note${sent ? " is-success" : ""}`}>
-                  {sent
-                    ? "Заявка принята локально (заглушка). Подключите отправку на почту/Telegram позже."
-                    : "Нажимая кнопку, вы соглашаетесь на обработку контакта для ответа по заявке."}
-                </p>
-              </form>
+            <div className="section__head reveal" id="contact">
+              <p className="section__eyebrow">Контакты</p>
+              <h2 className="section__title">
+                <span className="section__title-accent">Обсудим</span> ваш проект
+              </h2>
+              <p className="section__text">
+                Напишите в Telegram — ответим в течение рабочего дня.
+              </p>
             </div>
-            <aside className="contact__aside reveal">
-              <p>
-                Telegram:{" "}
-                <a href="https://t.me/legat_io" target="_blank" rel="noreferrer">
-                  @legat_io
-                </a>
-              </p>
-              <p>
-                Telegram number:{" "}
-                <a href="tel:+375444910602">+375(44)491-06-02</a>
-              </p>
-              <p>
-                Email:{" "}
-                <a href="mailto:tzavadic@gmail.com">tzavadic@gmail.com</a>
-              </p>
-              <p>Светлогорск/Беларусь</p>
-            </aside>
+
+            <form
+              className="chat-bar reveal"
+              onSubmit={(event) => {
+                event.preventDefault();
+                window.open(telegramHref(draft || TG_MESSAGE), "_blank", "noopener,noreferrer");
+              }}
+            >
+              <label className="visually-hidden" htmlFor="telegram-message">
+                Сообщение в Telegram
+              </label>
+              <input
+                id="telegram-message"
+                className="chat-bar__input"
+                value={draft}
+                onChange={(event) => setDraft(event.target.value)}
+                readOnly={!typingDone && chatVisible}
+                placeholder={TG_MESSAGE}
+              />
+              <button className="chat-bar__send" type="submit" aria-label="Отправить в Telegram">
+                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                  <path
+                    fill="currentColor"
+                    d="M3.4 11.2 19.2 4.4c.7-.3 1.4.4 1.1 1.1l-6.8 15.8c-.3.8-1.5.8-1.8 0l-2.5-6.3-6.3-2.5c-.8-.3-.8-1.5 0-1.8Zm8 2.3 1.8 4.5 4.8-11.2-6.6 6.7Z"
+                  />
+                </svg>
+              </button>
+            </form>
+
+            <div className="contact-links reveal">
+              <a className="contact-chip" href={`https://t.me/${TG_USER}`} target="_blank" rel="noreferrer">
+                Telegram · @{TG_USER}
+              </a>
+              <a className="contact-chip" href={`tel:${PHONE}`}>
+                {PHONE_LABEL}
+              </a>
+              <a className="contact-chip" href={`viber://chat?number=%2B${PHONE.replace("+", "")}`}>
+                Viber
+              </a>
+              <a className="contact-chip" href={`mailto:${EMAIL}`}>
+                {EMAIL}
+              </a>
+              <span className="contact-chip contact-chip--muted">Светлогорск / Беларусь</span>
+            </div>
           </div>
         </section>
       </main>
