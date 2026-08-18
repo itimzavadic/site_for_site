@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Agentation } from "agentation";
+import heroDemoPoster from "./assets/hero-demo.jpg";
+import heroDemoVideo from "./assets/hero-demo.mp4";
 
 const TG_USER = "legat_io";
-const TG_MESSAGE = "Привет! Давай обсудим мой проект!";
+const TG_MESSAGE = "Здравствуйте! Давайте обсудим мой проект!";
 const PHONE = "+375444910602";
 const PHONE_LABEL = "+375(44)491-06-02";
 const EMAIL = "tzavadic@gmail.com";
@@ -42,7 +44,7 @@ const audience = [
   },
   {
     title: "Эксперты и курсы",
-    text: "Специалисты и онлайн-школы: понятная упаковка услуги, доверие и запись на консультацию.",
+    text: "Специалисты и онлайн-школы: упаковка услуги, формирование доверия и запись на консультацию.",
   },
   {
     title: "Стартапы и продукты",
@@ -80,21 +82,24 @@ const steps = [
 const cases = [
   {
     tag: "Лендинг · услуги",
-    title: "Сайт для студии ремонта",
-    text: "Задача: больше заявок с рекламы. Решение: короткий оффер, кейсы до/после и форма в 3 поля.",
-    result: "Заглушка: +38% заявок",
+    title: "Сайт для услуги «Покрытие ванны акрилом»",
+    text: "Задача: больше заявок с рекламы. Решение: короткий оффер, кейсы до/после, «Об услуге», форма обратной связи и контакты.",
+    result: "Срок исполнения: 3 дня",
+    url: "https://akrilvanna-rch.by",
   },
   {
-    tag: "Корпоративный",
-    title: "Сайт B2B-поставщика",
-    text: "Задача: выглядеть надёжнее конкурентов. Решение: услуги, сертификаты, понятный путь к КП.",
-    result: "Заглушка: срок 4 недели",
+    tag: "Лендинг · услуги",
+    title: "Сайт для студии гранита «Мемория»",
+    text: "Задача: больше заявок и удобство оформления заказа на услуги. Решение: перечень услуг, каталог материалов, калькулятор стоимости, кейсы до/после, интеграции с мессенджерами и соцсетями, аналитика.",
+    result: "Срок исполнения: 7 дней",
+    url: "https://мемория.бел",
   },
   {
-    tag: "Магазин",
-    title: "Каталог для локального бренда",
-    text: "Задача: принимать заказы онлайн. Решение: карточки товаров, фильтры и оплата.",
-    result: "Заглушка: запуск за 6 недель",
+    tag: "Лендинг · услуги",
+    title: "Сайт для бурения скважин",
+    text: "Задача: локализация заказов, новые лиды. Решение: повышение доверия, примеры работ, отображение опыта компании, контакты, интеграция с соцсетями и мессенджерами.",
+    result: "Срок исполнения: 2 дня",
+    url: "https://gydrosphera.by",
   },
 ];
 
@@ -174,6 +179,7 @@ function Site() {
   const rootRef = useReveal();
   const contactRef = useRef<HTMLElement | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
   const [chatVisible, setChatVisible] = useState(false);
   const typedMessage = useTypedMessage(TG_MESSAGE, chatVisible);
   const [draft, setDraft] = useState("");
@@ -188,6 +194,14 @@ function Site() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduceMotion(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
   }, []);
 
   useEffect(() => {
@@ -221,7 +235,7 @@ function Site() {
           <div className="container">
             <h1 className="hero__brand">
               <span className="hero__brand-bar">Бар</span>
-              <span className="hero__brand-site">Сайтов</span>
+              <span className="hero__brand-site">САЙТОВ</span>
             </h1>
             <div className="hero__grid">
               <div className="hero__copy">
@@ -248,12 +262,26 @@ function Site() {
                       <span className="hero__mock-dot" />
                       <span className="hero__mock-dot" />
                     </div>
-                    <div className="hero__mock-body">
-                      <div className="hero__mock-panel" />
-                      <div className="hero__mock-panel hero__mock-panel--accent" />
-                    </div>
+                    {reduceMotion ? (
+                      <img
+                        className="hero__video"
+                        src={heroDemoPoster}
+                        alt=""
+                      />
+                    ) : (
+                      <video
+                        className="hero__video"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        preload="metadata"
+                        poster={heroDemoPoster}
+                      >
+                        <source src={heroDemoVideo} type="video/mp4" />
+                      </video>
+                    )}
                   </div>
-                  <div className="hero__float" />
                 </div>
               </div>
             </div>
@@ -327,15 +355,25 @@ function Site() {
             <div className="cases">
               {cases.map((item) => (
                 <article className="case reveal" key={item.title}>
-                  <div className="case__media">
+                  <a
+                    className="case__media"
+                    href={item.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`Открыть сайт: ${item.title}`}
+                  >
+                    <img
+                      className="case__preview"
+                      src={`https://s.wordpress.com/mshots/v1/${encodeURIComponent(item.url)}?w=1200`}
+                      alt=""
+                    />
                     <span className="case__tag">{item.tag}</span>
-                  </div>
+                  </a>
                   <div>
                     <h3>{item.title}</h3>
                     <p>{item.text}</p>
                     <div className="case__meta">
                       <span>{item.result}</span>
-                      <span>Скрин: заглушка</span>
                     </div>
                   </div>
                 </article>
