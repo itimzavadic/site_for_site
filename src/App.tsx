@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Agentation } from "agentation";
+import heroDemoPoster from "./assets/hero-demo.jpg";
+import heroDemoVideo from "./assets/hero-demo.mp4";
 
 const TG_USER = "legat_io";
 const TG_MESSAGE = "Привет! Давай обсудим мой проект!";
@@ -174,6 +176,7 @@ function Site() {
   const rootRef = useReveal();
   const contactRef = useRef<HTMLElement | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
   const [chatVisible, setChatVisible] = useState(false);
   const typedMessage = useTypedMessage(TG_MESSAGE, chatVisible);
   const [draft, setDraft] = useState("");
@@ -188,6 +191,14 @@ function Site() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduceMotion(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
   }, []);
 
   useEffect(() => {
@@ -248,12 +259,22 @@ function Site() {
                       <span className="hero__mock-dot" />
                       <span className="hero__mock-dot" />
                     </div>
-                    <div className="hero__mock-body">
-                      <div className="hero__mock-panel" />
-                      <div className="hero__mock-panel hero__mock-panel--accent" />
-                    </div>
+                    {reduceMotion ? (
+                      <img className="hero__video" src={heroDemoPoster} alt="" />
+                    ) : (
+                      <video
+                        className="hero__video"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        preload="metadata"
+                        poster={heroDemoPoster}
+                      >
+                        <source src={heroDemoVideo} type="video/mp4" />
+                      </video>
+                    )}
                   </div>
-                  <div className="hero__float" />
                 </div>
               </div>
             </div>

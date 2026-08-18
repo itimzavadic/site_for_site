@@ -279,21 +279,27 @@ select {
 }
 
 .hero__mock {
-  aspect-ratio: 16 / 11;
+  aspect-ratio: 3 / 4;
+  width: min(100%, 28rem);
+  margin-inline: auto;
   border-radius: 18px;
   overflow: hidden;
-  background:
-    linear-gradient(180deg, #e8ecff 0%, #f7f4ff 100%);
+  background: #111318;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .hero__mock-bar {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
   height: 2.2rem;
   display: flex;
   align-items: center;
   gap: 0.35rem;
   padding: 0 0.85rem;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.92);
   border-bottom: 1px solid var(--line);
 }
 
@@ -304,36 +310,26 @@ select {
   background: #d7dce8;
 }
 
-.hero__mock-body {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 1rem;
-  padding: 1.1rem;
-  height: calc(100% - 2.2rem);
+.hero__mock-dot:nth-child(1) {
+  background: #ff5f57;
 }
 
-.hero__mock-panel {
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(47, 91, 255, 0.08);
+.hero__mock-dot:nth-child(2) {
+  background: #febc2e;
 }
 
-.hero__mock-panel--accent {
-  background: linear-gradient(160deg, rgba(47, 91, 255, 0.92), rgba(123, 92, 255, 0.88));
+.hero__mock-dot:nth-child(3) {
+  background: #28c840;
 }
 
-.hero__float {
-  position: absolute;
-  inset: auto auto -1rem -1rem;
-  width: min(46%, 220px);
-  aspect-ratio: 4 / 5;
-  border-radius: 18px;
-  background:
-    linear-gradient(160deg, rgba(18, 20, 26, 0.04), transparent),
-    linear-gradient(135deg, #dfe6ff, #ebe4ff);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  box-shadow: 0 18px 40px rgba(18, 20, 26, 0.1);
-  animation: floaty 5s ease-in-out infinite;
+.hero__video {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  background: #111318;
 }
 
 .section {
@@ -763,16 +759,6 @@ select {
   }
 }
 
-@keyframes floaty {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
 @keyframes btnShimmer {
   0% {
     transform: translateX(-130%);
@@ -874,6 +860,7 @@ select {
   .hero__grid {
     grid-template-columns: 1.05fr 0.95fr;
     gap: 3rem;
+    align-items: center;
   }
 
   .services {
@@ -935,7 +922,6 @@ select {
 
   .hero__copy,
   .hero__visual,
-  .hero__float,
   .reveal {
     animation: none !important;
     transition: none !important;
