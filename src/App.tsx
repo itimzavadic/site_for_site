@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Agentation } from "agentation";
-import heroDemoPoster from "./assets/hero-demo.jpg";
-import heroDemoVideo from "./assets/hero-demo.mp4";
+import heroMacbook from "../macbook_for_study_head.webp";
+import contactPhoto from "../DSCF5361.jpg";
 
 const TG_USER = "legat_io";
 const TG_MESSAGE = "Здравствуйте! Давайте обсудим мой проект!";
@@ -71,7 +71,7 @@ const steps = [
   },
   {
     title: "Запуск",
-    text: "Арендуем сервер, публикуем сайт, передаем доступы и инструкции по правкам.",
+    text: "Арендуем сервер, публикуем сайт, передаем доступы, этапы правок.",
   },
   {
     title: "Гарантия",
@@ -90,7 +90,7 @@ const cases = [
   {
     tag: "Лендинг · услуги",
     title: "Сайт для студии гранита «Мемория»",
-    text: "Задача: больше заявок и удобство оформления заказа на услуги. Решение: перечень услуг, каталог материалов, калькулятор стоимости, кейсы до/после, интеграции с мессенджерами и соцсетями, аналитика.",
+    text: "Задача: больше заявок и удобство оформления заказа. Решение: перечень услуг, каталог материалов, калькулятор стоимости, кейсы до/после, интеграции с соцсетями, аналитика.",
     result: "Срок исполнения: 7 дней",
     url: "https://мемория.бел",
   },
@@ -100,29 +100,6 @@ const cases = [
     text: "Задача: локализация заказов, новые лиды. Решение: повышение доверия, примеры работ, отображение опыта компании, контакты, интеграция с соцсетями и мессенджерами.",
     result: "Срок исполнения: 2 дня",
     url: "https://gydrosphera.by",
-  },
-];
-
-const faqs = [
-  {
-    q: "Сколько времени занимает проект?",
-    a: "Лендинг обычно 10–14 дней, корпоративный сайт 3–5 недель. Точный срок зависит от объёма и скорости согласований.",
-  },
-  {
-    q: "Нужны ли тексты и фото от меня?",
-    a: "Да, лучше ваши материалы. Если их пока нет — стартуем с заглушек и структуры, затем подменим контент.",
-  },
-  {
-    q: "Сколько правок входит?",
-    a: "В пакетах заложены согласованные раунды правок. Мелкие правки после запуска можно оформить в сопровождение.",
-  },
-  {
-    q: "Кто занимается хостингом и доменом?",
-    a: "Могу подключить и настроить. Домен и хостинг обычно оплачиваются отдельно на вас.",
-  },
-  {
-    q: "Как проходит оплата?",
-    a: "Обычно предоплата 50% на старте и 50% перед запуском. Для крупных проектов — поэтапно.",
   },
 ];
 
@@ -179,7 +156,6 @@ function Site() {
   const rootRef = useReveal();
   const contactRef = useRef<HTMLElement | null>(null);
   const [scrolled, setScrolled] = useState(false);
-  const [reduceMotion, setReduceMotion] = useState(false);
   const [chatVisible, setChatVisible] = useState(false);
   const typedMessage = useTypedMessage(TG_MESSAGE, chatVisible);
   const [draft, setDraft] = useState("");
@@ -194,14 +170,6 @@ function Site() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setReduceMotion(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
   }, []);
 
   useEffect(() => {
@@ -232,57 +200,28 @@ function Site() {
 
       <main id="top">
         <section className="hero">
-          <div className="container">
+          <div className="hero__media" aria-hidden="true">
+            <img className="hero__bg" src={heroMacbook} alt="" />
+            <div className="hero__shade" />
+          </div>
+          <div className="container hero__content">
             <h1 className="hero__brand">
               <span className="hero__brand-bar">Бар</span>
               <span className="hero__brand-site">САЙТОВ</span>
             </h1>
-            <div className="hero__grid">
-              <div className="hero__copy">
-                <p className="hero__title">Сайты на заказ</p>
-                <p className="hero__lead">
-                  Создаем лендинги, корпоративные сайты и магазины под ключ: от
-                  идеи до запуска.
-                </p>
-                <div className="hero__actions">
-                  <a className="btn btn--primary btn--shine" href="#contact">
-                    Обсудить проект
-                  </a>
-                  <a className="btn btn--ghost" href="#cases">
-                    Смотреть кейсы
-                  </a>
-                </div>
-              </div>
-
-              <div className="hero__visual" aria-hidden="true">
-                <div className="hero__stage">
-                  <div className="hero__mock">
-                    <div className="hero__mock-bar">
-                      <span className="hero__mock-dot" />
-                      <span className="hero__mock-dot" />
-                      <span className="hero__mock-dot" />
-                    </div>
-                    {reduceMotion ? (
-                      <img
-                        className="hero__video"
-                        src={heroDemoPoster}
-                        alt=""
-                      />
-                    ) : (
-                      <video
-                        className="hero__video"
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        preload="metadata"
-                        poster={heroDemoPoster}
-                      >
-                        <source src={heroDemoVideo} type="video/mp4" />
-                      </video>
-                    )}
-                  </div>
-                </div>
+            <div className="hero__copy">
+              <p className="hero__title">Сайты на заказ</p>
+              <p className="hero__lead">
+                Получи свой лендинг, корпоративный сайт или онлайн магазин под
+                ключ: от идеи до запуска.
+              </p>
+              <div className="hero__actions">
+                <a className="btn btn--primary btn--shine" href="#contact">
+                  Обсудить проект
+                </a>
+                <a className="btn btn--ghost btn--ghost-on-dark" href="#cases">
+                  Смотреть кейсы
+                </a>
               </div>
             </div>
           </div>
@@ -382,36 +321,18 @@ function Site() {
           </div>
         </section>
 
-        <section className="section">
-          <div className="container">
-            <div className="section__head reveal" id="faq">
-              <h2 className="section__title">
-                Частые <span className="section__title-accent">вопросы</span>
-              </h2>
-              <p className="section__text">
-                Коротко про сроки, правки, оплату и то, что нужно от вас.
-              </p>
-            </div>
-            <div className="faq reveal">
-              {faqs.map((item) => (
-                <details key={item.q}>
-                  <summary>{item.q}</summary>
-                  <p>{item.a}</p>
-                </details>
-              ))}
-            </div>
+        <section className="section section--contact" ref={contactRef}>
+          <div className="contact-media" aria-hidden="true">
+            <img className="contact-media__img" src={contactPhoto} alt="" />
+            <div className="contact-media__shade" />
           </div>
-        </section>
-
-        <section className="section" ref={contactRef}>
           <div className="container contact">
             <div className="section__head reveal" id="contact">
-              <p className="section__eyebrow">Контакты</p>
               <h2 className="section__title">
                 <span className="section__title-accent">Обсудим</span> ваш проект
               </h2>
               <p className="section__text">
-                Напишите в Telegram — ответим в течение рабочего дня.
+                Напишите в Telegram — переходим к обсуждению в течение 10 минут.
               </p>
             </div>
 
@@ -422,41 +343,64 @@ function Site() {
                 window.open(telegramHref(draft || TG_MESSAGE), "_blank", "noopener,noreferrer");
               }}
             >
-              <label className="visually-hidden" htmlFor="telegram-message">
-                Сообщение в Telegram
-              </label>
-              <input
-                id="telegram-message"
-                className="chat-bar__input"
-                value={draft}
-                onChange={(event) => setDraft(event.target.value)}
-                readOnly={!typingDone && chatVisible}
-                placeholder={TG_MESSAGE}
-              />
-              <button className="chat-bar__send" type="submit" aria-label="Отправить в Telegram">
-                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-                  <path
-                    fill="currentColor"
-                    d="M3.4 11.2 19.2 4.4c.7-.3 1.4.4 1.1 1.1l-6.8 15.8c-.3.8-1.5.8-1.8 0l-2.5-6.3-6.3-2.5c-.8-.3-.8-1.5 0-1.8Zm8 2.3 1.8 4.5 4.8-11.2-6.6 6.7Z"
-                  />
-                </svg>
-              </button>
-            </form>
+                <label className="visually-hidden" htmlFor="telegram-message">
+                  Сообщение в Telegram
+                </label>
+                <input
+                  id="telegram-message"
+                  className="chat-bar__input"
+                  value={draft}
+                  onChange={(event) => setDraft(event.target.value)}
+                  readOnly={!typingDone && chatVisible}
+                  placeholder={TG_MESSAGE}
+                />
+                <button className="chat-bar__send" type="submit" aria-label="Отправить в Telegram">
+                  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M3.4 11.2 19.2 4.4c.7-.3 1.4.4 1.1 1.1l-6.8 15.8c-.3.8-1.5.8-1.8 0l-2.5-6.3-6.3-2.5c-.8-.3-.8-1.5 0-1.8Zm8 2.3 1.8 4.5 4.8-11.2-6.6 6.7Z"
+                    />
+                  </svg>
+                </button>
+              </form>
 
-            <div className="contact-links reveal">
-              <a className="contact-chip" href={`https://t.me/${TG_USER}`} target="_blank" rel="noreferrer">
-                Telegram · @{TG_USER}
-              </a>
-              <a className="contact-chip" href={`tel:${PHONE}`}>
-                {PHONE_LABEL}
-              </a>
-              <a className="contact-chip" href={`viber://chat?number=%2B${PHONE.replace("+", "")}`}>
-                Viber
-              </a>
-              <a className="contact-chip" href={`mailto:${EMAIL}`}>
+              <div className="contact-links">
+                <a className="contact-chip reveal" href={`https://t.me/${TG_USER}`} target="_blank" rel="noreferrer">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm4.64 6.8-1.55 7.3c-.12.54-.43.67-.87.42l-2.4-1.77-1.16 1.12c-.13.13-.24.24-.49.24l.17-2.43 4.45-4.02c.19-.17-.04-.27-.3-.1l-5.5 3.46-2.37-.74c-.52-.16-.53-.52.1-.78l9.26-3.57c.43-.16.81.1.66.74Z"
+                    />
+                  </svg>
+                  Telegram · @{TG_USER}
+                </a>
+                <a className="contact-chip reveal" href={`tel:${PHONE}`}>
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M6.62 10.79a15.15 15.15 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.85 21 3 13.15 3 3a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.58a1 1 0 0 1-.25 1.02l-2.2 2.19Z"
+                    />
+                  </svg>
+                  {PHONE_LABEL}
+                </a>
+                <a className="contact-chip reveal" href={`viber://chat?number=%2B${PHONE.replace("+", "")}`}>
+                  <svg viewBox="2.8 1.7 19 19.8" aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M11.4 2C6.8 2.1 3.1 5.7 3 10.3v.3c0 1.9.6 3.7 1.7 5.2L3.5 21l5.4-1.4c1.4.8 3 1.2 4.6 1.2h.1c4.6-.1 8.3-3.8 8.4-8.4.1-4.6-3.6-8.4-8.4-8.4h-.2Zm4.9 12.2c-.2.6-1.2 1.1-1.9 1.2-.5.1-1.1.1-1.8-.1-4.1-1.7-6.8-5.7-7-6-.2-.3-1.4-1.9-1.4-3.6s.9-2.5 1.2-2.9c.3-.3.7-.5 1-.5h.7c.2 0 .5 0 .7.6.2.6.8 2.1.8 2.2.1.2.1.4 0 .6-.1.2-.2.4-.4.6-.2.2-.4.4-.5.5-.2.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1.1 2.2 1.4 2.5 1.6.3.1.5.1.7-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.7-.1.3.1 1.8.8 2.1 1 .3.1.5.2.6.3.1.2.1.9-.1 1.5Z"
+                    />
+                  </svg>
+                  Viber
+                </a>
+                <a className="contact-chip reveal" href={`mailto:${EMAIL}`}>
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      fill="currentColor"
+                      d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4.2-8 5-8-5V6l8 5 8-5v2.2Z"
+                    />
+                  </svg>
                 {EMAIL}
               </a>
-              <span className="contact-chip contact-chip--muted">Светлогорск / Беларусь</span>
             </div>
           </div>
         </section>
@@ -465,7 +409,6 @@ function Site() {
       <footer className="site-footer">
         <div className="container site-footer__inner">
           <span>© {new Date().getFullYear()} БарСайтов · сайты на заказ</span>
-          <span>Заглушка реквизитов · ИП / самозанятость</span>
         </div>
       </footer>
     </div>
