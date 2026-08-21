@@ -308,10 +308,24 @@ select {
   color: #fff;
 }
 
+/* Buran не рисует «Й» — берём «И» того же шрифта и рисуем краткую. */
 .cyr-short-i {
-  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
-  font-weight: 700;
-  letter-spacing: -0.04em;
+  position: relative;
+  display: inline-block;
+}
+
+.cyr-short-i::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0.02em;
+  width: 0.42em;
+  height: 0.2em;
+  border: 0.055em solid currentColor;
+  border-top: 0;
+  border-radius: 0 0 55% 55%;
+  transform: translateX(-50%);
+  pointer-events: none;
 }
 
 .hero__lead {
@@ -1320,7 +1334,7 @@ select {
   }
 
   .hero .container {
-    width: min(100% - 2.75rem, var(--container));
+    width: min(100% - 3.5rem, var(--container));
   }
 
   .hero__bg {
@@ -1354,19 +1368,27 @@ select {
   }
 
   .hero__brand {
-    font-size: clamp(4.1rem, 24vw, 5.8rem);
-    white-space: normal;
-    line-height: 0.82;
+    font-size: clamp(2.55rem, 14.5vw, 4rem);
+    white-space: nowrap;
+    line-height: 0.9;
     letter-spacing: 0.01em;
     margin: 0 0 0.35rem;
-    transform: scaleY(1.22);
+    transform: scaleY(1.28);
     transform-origin: center top;
-    padding-top: 0.12em;
+    padding-top: 0.18em;
   }
 
   .hero__brand-bar,
   .hero__brand-site {
-    display: block;
+    display: inline;
+  }
+
+  .hero__brand .cyr-short-i::after {
+    top: 0.06em;
+    width: 0.38em;
+    height: 0.16em;
+    border-width: 0.045em;
+    border-top: 0;
   }
 
   .hero__copy {
@@ -1376,11 +1398,17 @@ select {
   }
 
   .hero__title {
-    font-size: clamp(1.55rem, 7.2vw, 1.9rem);
+    font-size: clamp(1.45rem, 6.6vw, 1.8rem);
     transform: scaleY(1.12);
     transform-origin: left center;
     margin-bottom: 0.7rem;
     max-width: 100%;
+  }
+
+  .hero__title .cyr-short-i::after {
+    top: 0.04em;
+    width: 0.4em;
+    height: 0.18em;
   }
 
   .hero__lead {
@@ -1405,10 +1433,13 @@ select {
     min-height: auto;
     place-items: stretch;
     padding-block: 3rem 5.75rem;
+    padding-inline: 1.5rem;
   }
 
   .section--contact .container {
-    width: min(100% - 2.75rem, var(--container));
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
   }
 
   .section--contact .contact {
@@ -1434,6 +1465,8 @@ select {
 
   .chat-bar {
     padding: 0.4rem 0.4rem 0.4rem 0.95rem;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .chat-bar__input {
@@ -1443,6 +1476,8 @@ select {
   .contact-chip {
     white-space: normal;
     word-break: break-word;
+    box-sizing: border-box;
+    max-width: 100%;
   }
 
   main {
