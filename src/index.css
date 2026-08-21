@@ -1433,13 +1433,19 @@ select {
   }
 
   .section--contact .contact-media__shade {
-    display: none;
+    display: block;
+    background: rgba(8, 10, 16, 0.28);
+  }
+
+  .contact-media {
+    top: -1px;
+    bottom: -1px;
   }
 
   .contact-media__img {
     object-fit: cover;
-    object-position: 58% 52%;
-    transform: scale(1.02) translateY(6%);
+    object-position: 58% 42%;
+    transform: scale(1.08);
     transform-origin: center center;
   }
 
