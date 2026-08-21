@@ -308,26 +308,6 @@ select {
   color: #fff;
 }
 
-/* Buran не рисует «Й» — берём «И» того же шрифта и рисуем краткую сверху. */
-.cyr-short-i {
-  position: relative;
-  display: inline-block;
-}
-
-.cyr-short-i::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: -0.28em;
-  width: 0.4em;
-  height: 0.1em;
-  background: currentColor;
-  border-radius: 999px;
-  transform: translateX(-50%);
-  pointer-events: none;
-  z-index: 2;
-}
-
 .hero__lead {
   margin: 0 0 1.6rem;
   color: rgba(255, 255, 255, 0.84);
@@ -1371,7 +1351,7 @@ select {
   }
 
   .hero__brand {
-    font-size: clamp(2.85rem, 16vw, 4.35rem);
+    font-size: clamp(3.05rem, 17vw, 4.65rem);
     white-space: nowrap;
     line-height: 1.05;
     letter-spacing: 0.01em;
@@ -1385,14 +1365,6 @@ select {
   .hero__brand-bar,
   .hero__brand-site {
     display: inline;
-  }
-
-  .hero__brand .cyr-short-i::after {
-    top: -0.34em;
-    width: 0.36em;
-    height: 0.085em;
-    /* компенсируем scaleY родителя, чтобы краткая не уезжала в букву */
-    transform: translateX(-50%) scaleY(0.7);
   }
 
   .hero__copy {
@@ -1409,13 +1381,6 @@ select {
     max-width: 100%;
     padding-top: 0.2em;
     overflow: visible;
-  }
-
-  .hero__title .cyr-short-i::after {
-    top: -0.3em;
-    width: 0.38em;
-    height: 0.09em;
-    transform: translateX(-50%) scaleY(0.89);
   }
 
   .hero__lead {
@@ -1465,6 +1430,10 @@ select {
 
   .section--contact .section__text {
     font-size: 0.98rem;
+  }
+
+  .section--contact .contact-media__shade {
+    display: none;
   }
 
   .contact-media__img {
