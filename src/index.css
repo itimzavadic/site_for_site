@@ -308,7 +308,7 @@ select {
   color: #fff;
 }
 
-/* Buran не рисует «Й» — берём «И» того же шрифта и рисуем краткую. */
+/* Buran не рисует «Й» — берём «И» того же шрифта и рисуем краткую сверху. */
 .cyr-short-i {
   position: relative;
   display: inline-block;
@@ -318,14 +318,14 @@ select {
   content: "";
   position: absolute;
   left: 50%;
-  top: 0.02em;
-  width: 0.42em;
-  height: 0.2em;
-  border: 0.055em solid currentColor;
-  border-top: 0;
-  border-radius: 0 0 55% 55%;
+  top: -0.28em;
+  width: 0.4em;
+  height: 0.1em;
+  background: currentColor;
+  border-radius: 999px;
   transform: translateX(-50%);
   pointer-events: none;
+  z-index: 2;
 }
 
 .hero__lead {
@@ -1327,10 +1327,11 @@ select {
 
   .hero {
     min-height: 100svh;
-    padding: 20px 0 5.75rem;
+    padding: 52px 0 5.75rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    overflow: hidden;
   }
 
   .hero .container {
@@ -1365,17 +1366,20 @@ select {
     flex-direction: column;
     flex: 1;
     padding-bottom: 1.25rem;
+    padding-top: 0.75rem;
+    overflow: visible;
   }
 
   .hero__brand {
-    font-size: clamp(2.55rem, 14.5vw, 4rem);
+    font-size: clamp(2.85rem, 16vw, 4.35rem);
     white-space: nowrap;
-    line-height: 0.9;
+    line-height: 1.05;
     letter-spacing: 0.01em;
-    margin: 0 0 0.35rem;
-    transform: scaleY(1.28);
+    margin: 0.85rem 0 0.5rem;
+    transform: scaleY(1.42);
     transform-origin: center top;
-    padding-top: 0.18em;
+    padding-top: 0.42em;
+    overflow: visible;
   }
 
   .hero__brand-bar,
@@ -1384,11 +1388,11 @@ select {
   }
 
   .hero__brand .cyr-short-i::after {
-    top: 0.06em;
-    width: 0.38em;
-    height: 0.16em;
-    border-width: 0.045em;
-    border-top: 0;
+    top: -0.34em;
+    width: 0.36em;
+    height: 0.085em;
+    /* компенсируем scaleY родителя, чтобы краткая не уезжала в букву */
+    transform: translateX(-50%) scaleY(0.7);
   }
 
   .hero__copy {
@@ -1403,12 +1407,15 @@ select {
     transform-origin: left center;
     margin-bottom: 0.7rem;
     max-width: 100%;
+    padding-top: 0.2em;
+    overflow: visible;
   }
 
   .hero__title .cyr-short-i::after {
-    top: 0.04em;
-    width: 0.4em;
-    height: 0.18em;
+    top: -0.3em;
+    width: 0.38em;
+    height: 0.09em;
+    transform: translateX(-50%) scaleY(0.89);
   }
 
   .hero__lead {
@@ -1432,7 +1439,7 @@ select {
   .section--contact {
     min-height: auto;
     place-items: stretch;
-    padding-block: 3rem 5.75rem;
+    padding-block: 4.75rem 5.75rem;
     padding-inline: 1.5rem;
   }
 
@@ -1447,6 +1454,10 @@ select {
     gap: 1.15rem;
   }
 
+  .section--contact .section__head {
+    margin-top: 0.35rem;
+  }
+
   .section--contact .section__title {
     font-size: clamp(2.1rem, 11vw, 3rem);
     line-height: 1.15;
@@ -1458,9 +1469,9 @@ select {
 
   .contact-media__img {
     object-fit: cover;
-    object-position: 58% 28%;
-    transform: scale(1.15);
-    transform-origin: 55% 30%;
+    object-position: 58% 52%;
+    transform: scale(1.02) translateY(6%);
+    transform-origin: center center;
   }
 
   .chat-bar {
