@@ -1321,7 +1321,7 @@ select {
   .hero__bg {
     object-fit: cover;
     object-position: 68% 38%;
-    transform: scale(1.12);
+    transform: scale(1.04);
     transform-origin: 70% 40%;
   }
 
