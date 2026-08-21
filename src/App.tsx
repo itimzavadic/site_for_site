@@ -207,10 +207,14 @@ function Site() {
           <div className="container hero__content">
             <h1 className="hero__brand">
               <span className="hero__brand-bar">Бар</span>
-              <span className="hero__brand-site">САЙТОВ</span>
+              <span className="hero__brand-site">
+                СА<span className="cyr-short-i">Й</span>ТОВ
+              </span>
             </h1>
             <div className="hero__copy">
-              <p className="hero__title">Сайты на заказ</p>
+              <p className="hero__title">
+                Са<span className="cyr-short-i">й</span>ты на заказ
+              </p>
               <p className="hero__lead">
                 Получи свой лендинг, корпоративный сайт или онлайн магазин под
                 ключ: от идеи до запуска.

@@ -308,6 +308,12 @@ select {
   color: #fff;
 }
 
+.cyr-short-i {
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
 .hero__lead {
   margin: 0 0 1.6rem;
   color: rgba(255, 255, 255, 0.84);
@@ -1306,14 +1312,137 @@ select {
   }
 
   .hero {
-    min-height: min(88vh, 760px);
-    padding-top: 24px;
+    min-height: 100svh;
+    padding: 20px 0 5.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .hero .container {
+    width: min(100% - 2.75rem, var(--container));
+  }
+
+  .hero__bg {
+    object-fit: cover;
+    object-position: 68% 38%;
+    transform: scale(1.12);
+    transform-origin: 70% 40%;
+  }
+
+  .hero__shade {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(8, 10, 16, 0.62) 0%,
+        rgba(8, 10, 16, 0.34) 42%,
+        rgba(8, 10, 16, 0.58) 100%
+      ),
+      linear-gradient(
+        160deg,
+        rgba(8, 10, 16, 0.78) 0%,
+        rgba(8, 10, 16, 0.28) 55%,
+        rgba(8, 10, 16, 0.35) 100%
+      );
+  }
+
+  .hero__content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-bottom: 1.25rem;
   }
 
   .hero__brand {
-    font-size: clamp(3.2rem, 18vw, 5.6rem);
+    font-size: clamp(4.1rem, 24vw, 5.8rem);
     white-space: normal;
-    line-height: 0.95;
+    line-height: 0.82;
+    letter-spacing: 0.01em;
+    margin: 0 0 0.35rem;
+    transform: scaleY(1.22);
+    transform-origin: center top;
+    padding-top: 0.12em;
+  }
+
+  .hero__brand-bar,
+  .hero__brand-site {
+    display: block;
+  }
+
+  .hero__copy {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    max-width: none;
+  }
+
+  .hero__title {
+    font-size: clamp(1.55rem, 7.2vw, 1.9rem);
+    transform: scaleY(1.12);
+    transform-origin: left center;
+    margin-bottom: 0.7rem;
+    max-width: 100%;
+  }
+
+  .hero__lead {
+    font-size: 0.98rem;
+    line-height: 1.45;
+    margin-bottom: 1.25rem;
+    max-width: 22rem;
+  }
+
+  .hero__actions {
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .hero__actions .btn {
+    font-size: 12px;
+    padding: 0.72rem 1.05rem;
+    letter-spacing: 0.05em;
+  }
+
+  .section--contact {
+    min-height: auto;
+    place-items: stretch;
+    padding-block: 3rem 5.75rem;
+  }
+
+  .section--contact .container {
+    width: min(100% - 2.75rem, var(--container));
+  }
+
+  .section--contact .contact {
+    width: 100%;
+    gap: 1.15rem;
+  }
+
+  .section--contact .section__title {
+    font-size: clamp(2.1rem, 11vw, 3rem);
+    line-height: 1.15;
+  }
+
+  .section--contact .section__text {
+    font-size: 0.98rem;
+  }
+
+  .contact-media__img {
+    object-fit: cover;
+    object-position: 58% 28%;
+    transform: scale(1.15);
+    transform-origin: 55% 30%;
+  }
+
+  .chat-bar {
+    padding: 0.4rem 0.4rem 0.4rem 0.95rem;
+  }
+
+  .chat-bar__input {
+    font-size: 0.95rem;
+  }
+
+  .contact-chip {
+    white-space: normal;
+    word-break: break-word;
   }
 
   main {
