@@ -226,11 +226,15 @@ select {
   object-fit: cover;
   object-position: center 42%;
   display: block;
+  opacity: 0;
+  animation: heroBgFade 1.25s ease 0.08s forwards;
 }
 
 .hero__shade {
   position: absolute;
   inset: 0;
+  opacity: 0;
+  animation: heroBgFade 1.25s ease 0.18s forwards;
   background:
     linear-gradient(
       180deg,
@@ -1236,6 +1240,15 @@ select {
   }
 }
 
+@keyframes heroBgFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @keyframes btnShimmer {
   0% {
     transform: translateX(-130%);
@@ -1557,6 +1570,8 @@ select {
   }
 
   .hero__copy,
+  .hero__bg,
+  .hero__shade,
   .reveal {
     animation: none !important;
     transition: none !important;
