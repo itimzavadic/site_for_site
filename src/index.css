@@ -1404,7 +1404,7 @@ select {
   .section--contact {
     min-height: auto;
     place-items: stretch;
-    padding-block: 4.75rem 5.75rem;
+    padding-block: 4.75rem 2rem;
     padding-inline: 1.5rem;
   }
 
@@ -1467,11 +1467,12 @@ select {
   }
 
   main {
-    padding-bottom: 5.25rem;
+    padding-bottom: 0;
   }
 
   .site-footer {
-    padding-bottom: 5.5rem;
+    padding: 1.15rem 0 5.5rem;
+    border-top: 0;
   }
 }
 
